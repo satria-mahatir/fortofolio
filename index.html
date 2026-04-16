@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio | Satria Nanda Tama</title>
+    <style>
+        /* --- CSS Styling --- */
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #121212; 
+            color: #e0e0e0; 
+            overflow-x: hidden;
+        }
+
+        /* Navigasi */
+        header { 
+            background-color: #1a1a1a; 
+            padding: 15px 0; 
+            text-align: center; 
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #333;
+        }
+        header h1 { 
+            margin: 0 0 5px 0; 
+            color: #00ffcc; 
+            font-size: 1.8em;
+            letter-spacing: 1px;
+        }
+        nav a { 
+            color: #ffffff; 
+            margin: 0 12px; 
+            text-decoration: none; 
+            font-weight: 500; 
+            font-size: 0.95em;
+            transition: color 0.3s;
+        }
+        nav a:hover { 
+            color: #00ffcc; 
+        }
+
+        /* Container Utama */
+        .container { 
+            max-width: 1000px; 
+            margin: auto; 
+            padding: 20px; 
+        }
+
+        /* --- HERO SECTION (OPSI 1: LAYOUT SPLIT) --- */
+        .hero { 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            padding: 100px 20px; 
+            border-bottom: 1px solid #333; 
+        }
+        .hero-text {
+            flex: 1;
+            text-align: left;
+        }
+        .hero-text h2 { 
+            font-size: 3.2em; 
+            margin: 0 0 5px 0; 
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.1;
+        }
+        .hero-text h3 {
+            font-size: 1.5em;
+            color: #00ffcc;
+            margin: 0 0 20px 0;
+            font-weight: normal;
+        }
+        .hero-text p { 
+            font-size: 1.15em; 
+            color: #bbbbbb; 
+            margin-bottom: 35px;
+            line-height: 1.7;
+        }
+        .btn-cta {
+            background-color: #00ffcc;
+            color: #121212;
+            padding: 12px 28px;
+            border-radius: 4px; /* Dibuat agak kotak biar nyambung sama tema retro */
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+        }
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 4px 4px 0px rgba(255, 255, 255, 0.1); /* Efek bayangan retro */
+            background-color: #00e6b8;
+        }
+        .hero-image-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        .profile-img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 8px;
+            /* Efek bayangan biar fotonya makin pop up di background gelap */
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8)); 
+        }
+
+        /* Responsif untuk HP: Teks di atas, Foto di bawah */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding: 60px 20px;
+            }
+            .hero-text {
+                text-align: center;
+            }
+            .hero-text h2 {
+                font-size: 2.5em;
+            }
+        }
+
+        /* Section Umum */
+        .section { 
+            padding: 80px 20px; 
+            border-bottom: 1px solid #333; 
+        }
+        .section h3 { 
+            color: #00ffcc; 
+            font-size: 2em; 
+            margin-bottom: 30px; 
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .section p {
+            line-height: 1.8;
+            font-size: 1.1em;
+            color: #cccccc;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+        }
+
+        /* Keahlian (Skills) */
+        .skills-grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 15px; 
+            justify-content: center;
+        }
+        .skill-tag { 
+            background-color: #1a1a1a; 
+            padding: 12px 24px; 
+            border-radius: 4px; 
+            font-size: 1em; 
+            font-weight: bold;
+            color: #eee;
+            border: 1px solid #444;
+            transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
+        }
+        .skill-tag:hover {
+            background-color: #00ffcc;
+            color: #121212;
+            border-color: #00ffcc;
+            transform: translateY(-3px);
+        }
+
+        /* Proyek (Projects) - Tema Patchwork/Retro */
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .project-card {
+            background-color: #161616;
+            padding: 30px;
+            border-radius: 4px;
+            /* Border putus-putus ala jahitan patch */
+            border: 2px dashed #444; 
+            text-decoration: none; 
+            color: #e0e0e0;
+            display: block; 
+            transition: transform 0.3s, border-color 0.3s, background-color 0.3s;
+        }
+        .project-card:hover {
+            transform: translateY(-5px); 
+            border-color: #00ffcc;
+            border-style: solid; /* Saat di-hover, garis jadi solid */
+            background-color: #1a1a1a;
+        }
+        .project-card h4 {
+            margin: 0 0 15px 0;
+            color: #ffffff;
+            font-size: 1.4em;
+        }
+        .project-card p {
+            font-size: 1em;
+            margin: 0 0 20px 0;
+            color: #aaaaaa;
+            line-height: 1.6;
+        }
+        .github-link-text {
+            color: #00ffcc;
+            font-size: 0.95em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Tombol GitHub Utama */
+        .github-center {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .btn-github {
+            background-color: transparent;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid #ffffff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn-github:hover {
+            background-color: #ffffff;
+            color: #121212;
+        }
+        .btn-github:hover img {
+            filter: invert(0) !important;
+        }
+
+        /* Kontak */
+        .contact-info {
+            text-align: center;
+            font-size: 1.2em;
+            line-height: 2;
+        }
+        .contact-info a {
+            color: #00ffcc;
+            text-decoration: none;
+        }
+
+        /* Footer */
+        footer { 
+            text-align: center; 
+            padding: 30px; 
+            font-size: 0.9em; 
+            color: #666; 
+            background-color: #0a0a0a;
+            border-top: 1px solid #222;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>SATRIA</h1>
+        <nav>
+            <a href="#about">Tentang</a>
+            <a href="#skills">Keahlian</a>
+            <a href="#projects">Karya</a>
+            <a href="#contact">Kontak</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section id="hero" class="hero">
+            <div class="hero-text">
+                <h2>Satria Nanda Tama</h2>
+                <h3>Developer & Culture Enthusiast</h3>
+                <p>Siswa XI RPL 1 di SMKN 1 Bondowoso yang merakit kode dengan ketelitian layaknya tambalan kustom pada jaket denim saya. Berkomitmen menciptakan solusi perangkat lunak yang fungsional, efisien, dan berkarakter.</p>
+                <a href="#projects" class="btn-cta">Project saya</a>
+            </div>
+            
+            <div class="hero-image-container">
+                <img src="me.png" alt="Foto Satria Nanda Tama" class="profile-img">
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <h3>Tentang Saya</h3>
+            <p>Berbasis di Bondowoso, Jawa Timur. Saat ini saya sedang mendalami ilmu Rekayasa Perangkat Lunak. Saya percaya bahwa <i>coding</i> bukan cuma soal ngetik syntax, tapi juga soal memecahkan masalah dengan logika dan kreativitas. Saat sedang tidak berada di depan layar, Anda mungkin menemukan saya di bengkel vespa atau lagi touring menjelajah tempat baru.</p>
+        </section>
+
+        <section id="skills" class="section">
+            <h3>Tech Stack</h3>
+            <div class="skills-grid">
+                <span class="skill-tag">HTML5 & CSS3</span>
+                <span class="skill-tag">PHP</span>
+                <span class="skill-tag">Laravel</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">Dart & Flutter</span>
+                <span class="skill-tag">Git/GitHub</span>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <h3>Showcase Karya</h3>
+            
+            <div class="projects-container">
+                <a href="https://github.com/satria-mahatir/project-wali" target="_blank" class="project-card">
+                    <h4>Web E-Commerce</h4>
+                    <p>Sistem backend dengan Laravel. guru wali, dengan menguji sistem crud dengan adanya admin yang bisa mengatur data di dalam nya</p>
+                    <span class="github-link-text">Lihat Source Code →</span>
+                </a>
+
+                <a href="https://github.com/satria-mahatir/islamic-pro-app" target="_blank" class="project-card">
+                    <h4>Task Manager App</h4>
+                    <p>Aplikasi mobile berbasis Flutter. UI yang clean 2026.</p>
+                    <span class="github-link-text">Lihat Source Code →</span>
+                </a>
+            </div>
+
+            <div class="github-center">
+                <a href="https://github.com/satria-mahatir" target="_blank" class="btn-github">
+                    <img src="github.webp" alt="GitHub Logo" width="24" style="filter: invert(1);">
+                    Eksplorasi Repositori GitHub Saya
+                </a>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <h3>Mari Terhubung</h3>
+            <p>Terbuka untuk diskusi proyek, kolaborasi, atau sekadar obrolan seputar teknologi dan kustomisasi otomotif.</p>
+            <div class="contact-info">
+                <p>📍 Bondowoso, Jawa Timur</p>
+                <p>✉️ <a href="mailto:satrianandatama@gmail.com">satrianandatama@gmail.com</a></p>
+
+                <p>📱 WhatsApp: <a href="https://wa.me/6283139831133" target="_blank" style="color: #00ffcc; text-decoration: none; font-weight: bold;">Kirim Pesan</a></p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        &copy; 2026 Satria Nanda Tama.
+    </footer>
+
+</body>
+</html>
