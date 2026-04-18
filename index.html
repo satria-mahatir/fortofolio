@@ -5,270 +5,205 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portofolio | Satria Nanda Tama</title>
     <style>
-        /* --- CSS Styling --- */
-        * {
-            box-sizing: border-box;
-            scroll-behavior: smooth;
+        /* --- CSS VARIABLES (Sistem Tema) --- */
+        :root {
+            --bg-main: #0a0a0a; 
+            --bg-header: rgba(10, 10, 10, 0.7); 
+            --bg-card: rgba(22, 22, 22, 0.6); 
+            --text-main: #e0e0e0;
+            --text-muted: #bbbbbb;
+            --accent: #00ffcc; 
+            --accent-hover: #00e6b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --github-btn-bg: transparent;
+            --github-btn-text: #ffffff;
+            --img-shadow: rgba(0, 0, 0, 0.8);
+            --glow-1: rgba(0, 255, 204, 0.12); 
+            --glow-2: rgba(0, 92, 230, 0.15);  
         }
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            background-color: #121212; 
-            color: #e0e0e0; 
-            overflow-x: hidden;
+
+        body.light-mode {
+            --bg-main: #f0f2f5;
+            --bg-header: rgba(255, 255, 255, 0.7);
+            --bg-card: rgba(255, 255, 255, 0.6);
+            --text-main: #2b2b2b;
+            --text-muted: #555555;
+            --accent: #005ce6; 
+            --accent-hover: #0047b3;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --card-border: rgba(0, 0, 0, 0.1);
+            --github-btn-bg: #f4f5f7;
+            --github-btn-text: #121212;
+            --img-shadow: rgba(0, 0, 0, 0.15);
+            --glow-1: rgba(0, 92, 230, 0.15); 
+            --glow-2: rgba(0, 255, 204, 0.15); 
         }
+
+        /* --- CUSTOM SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-main); }
+        ::-webkit-scrollbar-thumb { 
+            background: var(--border-color); 
+            border-radius: 10px; 
+            border: 2px solid var(--bg-main);
+        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        /* --- BACKGROUND ANIMASI AMBIENT --- */
+        .ambient-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow: hidden; z-index: -1; pointer-events: none; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.8; animation: floatBlob infinite alternate ease-in-out; transition: background 0.8s ease; }
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--glow-1); animation-duration: 12s; }
+        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--glow-2); animation-duration: 15s; animation-direction: alternate-reverse; }
+        @keyframes floatBlob { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(5vw, 5vh) scale(1.1); } 100% { transform: translate(-5vw, -5vh) scale(0.9); } }
+
+        /* --- PRELOADER JENDELA TERMINAL --- */
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.4s ease, visibility 0.4s ease; font-family: 'Courier New', Courier, monospace; }
+        .terminal-window { width: 90%; max-width: 550px; background-color: #0d0d0d; border-radius: 8px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); border: 1px solid #333; overflow: hidden; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .terminal-header { background-color: #1a1a1a; padding: 10px 15px; display: flex; align-items: center; border-bottom: 1px solid #333; }
+        .terminal-buttons { display: flex; gap: 8px; }
+        .terminal-btn { width: 12px; height: 12px; border-radius: 50%; }
+        .btn-close { background-color: #ff5f56; } .btn-min { background-color: #ffbd2e; } .btn-max { background-color: #27c93f; }
+        .terminal-title { flex: 1; text-align: center; color: #777; font-size: 0.85em; letter-spacing: 1px; margin-right: 56px; }
+        .terminal-body { padding: 20px; min-height: 120px; display: flex; flex-direction: column; justify-content: flex-start; }
+        .terminal-loader { color: #00ffcc; font-size: 1.1em; line-height: 1.6; }
+        .cursor { display: inline-block; width: 8px; height: 1.1em; background-color: #00ffcc; animation: blink 0.8s step-end infinite; vertical-align: bottom; margin-left: 4px; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* --- CSS BASE --- */
+        * { box-sizing: border-box; } 
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; transition: background-color 0.4s ease, color 0.4s ease; }
+
+        /* --- ANIMASI SCROLL REVEAL --- */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
 
         /* Navigasi */
-        header { 
-            background-color: #1a1a1a; 
-            padding: 15px 0; 
-            text-align: center; 
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid #333;
-        }
-        header h1 { 
-            margin: 0 0 5px 0; 
-            color: #00ffcc; 
-            font-size: 1.8em;
-            letter-spacing: 1px;
-        }
-        nav a { 
-            color: #ffffff; 
-            margin: 0 12px; 
-            text-decoration: none; 
-            font-weight: 500; 
-            font-size: 0.95em;
-            transition: color 0.3s;
-        }
-        nav a:hover { 
-            color: #00ffcc; 
-        }
+        header { background-color: var(--bg-header); padding: 15px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; justify-content: space-around; align-items: center; transition: background-color 0.4s ease, border-color 0.4s ease; }
+        header h1 { margin: 0; color: var(--accent); font-size: 1.8em; letter-spacing: 1px; transition: color 0.4s; }
+        nav { display: flex; align-items: center; gap: 15px; }
+        nav a { color: var(--text-main); text-decoration: none; font-weight: 500; font-size: 0.95em; transition: color 0.3s ease;}
+        nav a:hover { color: var(--accent); }
 
-        /* Container Utama */
-        .container { 
-            max-width: 1000px; 
-            margin: auto; 
-            padding: 20px; 
-        }
+        /* Tombol Tema */
+        .theme-btn { background-color: transparent; border: 1px solid var(--border-color); color: var(--text-main); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: 15px; outline: none; transition: transform 0.3s, border-color 0.3s; }
+        .theme-btn:hover { background-color: var(--bg-card); transform: scale(1.05); border-color: var(--accent); }
+        .theme-btn svg { width: 20px; height: 20px; transition: transform 0.5s; }
+        body.light-mode .theme-btn svg { transform: rotate(180deg); }
 
-        /* --- HERO SECTION (OPSI 1: LAYOUT SPLIT) --- */
-        .hero { 
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 40px;
-            padding: 100px 20px; 
-            border-bottom: 1px solid #333; 
-        }
-        .hero-text {
-            flex: 1;
-            text-align: left;
-        }
-        .hero-text h2 { 
-            font-size: 3.2em; 
-            margin: 0 0 5px 0; 
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            line-height: 1.1;
-        }
-        .hero-text h3 {
-            font-size: 1.5em;
-            color: #00ffcc;
-            margin: 0 0 20px 0;
-            font-weight: normal;
-        }
-        .hero-text p { 
-            font-size: 1.15em; 
-            color: #bbbbbb; 
-            margin-bottom: 35px;
-            line-height: 1.7;
-        }
-        .btn-cta {
-            background-color: #00ffcc;
-            color: #121212;
-            padding: 12px 28px;
-            border-radius: 4px; /* Dibuat agak kotak biar nyambung sama tema retro */
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
-        }
-        .btn-cta:hover {
-            transform: translateY(-3px);
-            box-shadow: 4px 4px 0px rgba(255, 255, 255, 0.1); /* Efek bayangan retro */
-            background-color: #00e6b8;
-        }
-        .hero-image-container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-        }
-        .profile-img {
+        .container { max-width: 1000px; margin: auto; padding: 20px; position: relative; z-index: 2; }
+
+        /* Hero */
+        .hero { display: flex; align-items: center; justify-content: space-between; gap: 40px; padding: 100px 20px; border-bottom: 1px solid var(--border-color); transition: border-color 0.4s ease; }
+        .hero-text { flex: 1; text-align: left; }
+        .hero-text h2 { font-size: 3.2em; margin: 0 0 5px 0; color: var(--text-main); text-transform: uppercase; letter-spacing: 2px; line-height: 1.1; transition: color 0.4s; }
+        .hero-text h3 { font-size: 1.5em; color: var(--accent); margin: 0 0 20px 0; font-weight: normal; transition: color 0.4s; }
+        .hero-text p { font-size: 1.15em; color: var(--text-muted); margin-bottom: 35px; line-height: 1.7; transition: color 0.4s; }
+        .btn-cta { background-color: var(--accent); color: #ffffff; padding: 12px 28px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1.1em; text-transform: uppercase; letter-spacing: 1px; transition: transform 0.3s, box-shadow 0.3s, background-color 0.4s, color 0.4s;}
+        body.light-mode .btn-cta { color: #ffffff; }
+        body:not(.light-mode) .btn-cta { color: #121212; }
+        .btn-cta:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); background-color: var(--accent-hover); }
+        .hero-image-container { flex: 1; display: flex; justify-content: center; }
+        .profile-img { width: 100%; max-width: 400px; height: auto; border-radius: 12px; filter: drop-shadow(0 15px 25px var(--img-shadow)); }
+
+        /* --- ABOUT SECTION (Layout Foto Statis Estetik) --- */
+        .section { padding: 80px 20px; border-bottom: 1px solid var(--border-color); transition: border-color 0.4s ease; }
+        .section h3 { color: var(--accent); font-size: 2em; margin-bottom: 40px; text-align: center; text-transform: uppercase; letter-spacing: 2px; transition: color 0.4s; }
+        
+        .about-content { display: flex; align-items: center; gap: 40px; }
+        .about-text { flex: 1; }
+        .about-text p { line-height: 1.8; font-size: 1.1em; color: var(--text-muted); margin: 0 0 20px 0; transition: color 0.4s; }
+        
+        .about-image-container { flex: 1; display: flex; justify-content: center; position: relative; }
+        .about-img {
             width: 100%;
-            max-width: 400px;
-            height: auto;
-            border-radius: 8px;
-            /* Efek bayangan biar fotonya makin pop up di background gelap */
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8)); 
+            max-width: 350px;
+            border-radius: 12px;
+            box-shadow: 0 15px 30px var(--img-shadow);
+            transform: rotate(3deg); /* Dibikin miring dikit biar artsy */
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .about-img:hover {
+            transform: rotate(0deg) scale(1.05); /* Lurus dan nge-zoom halus kalau disorot */
+            box-shadow: 0 20px 40px var(--img-shadow);
         }
 
-        /* Responsif untuk HP: Teks di atas, Foto di bawah */
         @media (max-width: 768px) {
-            .hero {
-                flex-direction: column-reverse;
-                text-align: center;
-                padding: 60px 20px;
-            }
-            .hero-text {
-                text-align: center;
-            }
-            .hero-text h2 {
-                font-size: 2.5em;
-            }
+            header { flex-direction: column; gap: 15px; }
+            nav { flex-wrap: wrap; justify-content: center; }
+            .hero { flex-direction: column-reverse; text-align: center; padding: 60px 20px; }
+            .hero-text { text-align: center; }
+            .hero-text h2 { font-size: 2.5em; }
+            
+            .about-content { flex-direction: column-reverse; text-align: center; }
+            .about-img { transform: rotate(0deg); max-width: 280px; margin-bottom: 20px; }
+            .about-img:hover { transform: scale(1.02); }
         }
 
-        /* Section Umum */
-        .section { 
-            padding: 80px 20px; 
-            border-bottom: 1px solid #333; 
-        }
-        .section h3 { 
-            color: #00ffcc; 
-            font-size: 2em; 
-            margin-bottom: 30px; 
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .section p {
-            line-height: 1.8;
-            font-size: 1.1em;
-            color: #cccccc;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 30px auto;
-        }
+        /* Skills */
+        .skills-grid { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+        .skill-tag { background-color: var(--bg-card); padding: 12px 24px; border-radius: 6px; font-size: 1em; font-weight: bold; color: var(--text-main); border: 1px solid var(--card-border); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: transform 0.3s, background-color 0.4s, color 0.4s, border-color 0.4s, opacity 0.8s, translateY 0.8s; }
+        .skill-tag:hover { background-color: var(--accent); color: #ffffff; border-color: var(--accent); transform: translateY(-3px) scale(1.05); }
 
-        /* Keahlian (Skills) */
-        .skills-grid { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 15px; 
-            justify-content: center;
-        }
-        .skill-tag { 
-            background-color: #1a1a1a; 
-            padding: 12px 24px; 
-            border-radius: 4px; 
-            font-size: 1em; 
-            font-weight: bold;
-            color: #eee;
-            border: 1px solid #444;
-            transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
-        }
-        .skill-tag:hover {
-            background-color: #00ffcc;
-            color: #121212;
-            border-color: #00ffcc;
-            transform: translateY(-3px);
-        }
+        /* Projects */
+        .projects-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .project-card { background-color: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--card-border); text-decoration: none; color: var(--text-main); display: block; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: transform 0.3s, box-shadow 0.3s, background-color 0.4s, border-color 0.4s, opacity 0.8s, translateY 0.8s; }
+        .project-card:hover { transform: translateY(-5px); border-color: var(--accent); background-color: var(--bg-main); box-shadow: 0 10px 25px var(--img-shadow); }
+        .project-card h4 { margin: 0 0 15px 0; color: var(--text-main); font-size: 1.4em; transition: color 0.4s; }
+        .project-card p { font-size: 1em; margin: 0 0 20px 0; color: var(--text-muted); line-height: 1.6; transition: color 0.4s; }
+        .github-link-text { color: var(--accent); font-size: 0.95em; font-weight: bold; text-transform: uppercase; transition: color 0.4s; }
 
-        /* Proyek (Projects) - Tema Patchwork/Retro */
-        .projects-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-        .project-card {
-            background-color: #161616;
-            padding: 30px;
-            border-radius: 4px;
-            /* Border putus-putus ala jahitan patch */
-            border: 2px dashed #444; 
-            text-decoration: none; 
-            color: #e0e0e0;
-            display: block; 
-            transition: transform 0.3s, border-color 0.3s, background-color 0.3s;
-        }
-        .project-card:hover {
-            transform: translateY(-5px); 
-            border-color: #00ffcc;
-            border-style: solid; /* Saat di-hover, garis jadi solid */
-            background-color: #1a1a1a;
-        }
-        .project-card h4 {
-            margin: 0 0 15px 0;
-            color: #ffffff;
-            font-size: 1.4em;
-        }
-        .project-card p {
-            font-size: 1em;
-            margin: 0 0 20px 0;
-            color: #aaaaaa;
-            line-height: 1.6;
-        }
-        .github-link-text {
-            color: #00ffcc;
-            font-size: 0.95em;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
+        .github-center { text-align: center; margin-top: 50px; }
+        .btn-github { background-color: var(--github-btn-bg); color: var(--text-main); padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--card-border); transition: background-color 0.3s, border-color 0.4s, color 0.4s;}
+        .btn-github:hover { background-color: var(--text-main); color: var(--bg-main); border-color: var(--text-main); }
+        .github-icon { width: 24px; transition: filter 0.3s ease; }
+        body:not(.light-mode) .github-icon { filter: invert(1); }
+        body:not(.light-mode) .btn-github:hover .github-icon { filter: invert(0); }
+        body.light-mode .github-icon { filter: invert(0); }
+        body.light-mode .btn-github:hover .github-icon { filter: invert(1); }
 
-        /* Tombol GitHub Utama */
-        .github-center {
-            text-align: center;
-            margin-top: 50px;
-        }
-        .btn-github {
-            background-color: transparent;
-            color: #ffffff;
-            padding: 12px 24px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            border: 2px solid #ffffff;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .btn-github:hover {
-            background-color: #ffffff;
-            color: #121212;
-        }
-        .btn-github:hover img {
-            filter: invert(0) !important;
-        }
+        /* Contact */
+        .contact-info { text-align: center; font-size: 1.2em; line-height: 2; }
+        .contact-info p { transition: color 0.4s; color: var(--text-muted); }
+        .contact-info a { color: var(--accent); text-decoration: none; font-weight: bold; transition: color 0.4s; }
 
-        /* Kontak */
-        .contact-info {
-            text-align: center;
-            font-size: 1.2em;
-            line-height: 2;
-        }
-        .contact-info a {
-            color: #00ffcc;
-            text-decoration: none;
-        }
+        footer { text-align: center; padding: 30px; font-size: 0.9em; color: var(--text-muted); background-color: transparent; border-top: 1px solid var(--border-color); transition: color 0.4s, border-color 0.4s; }
 
-        /* Footer */
-        footer { 
-            text-align: center; 
-            padding: 30px; 
-            font-size: 0.9em; 
-            color: #666; 
-            background-color: #0a0a0a;
-            border-top: 1px solid #222;
-        }
+        /* View Transitions API */
+        ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+        ::view-transition-old(root) { z-index: 1; }
+        ::view-transition-new(root) { z-index: 2; }
     </style>
 </head>
 <body>
+
+    <div class="ambient-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div id="preloader">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <span class="terminal-btn btn-close"></span>
+                    <span class="terminal-btn btn-min"></span>
+                    <span class="terminal-btn btn-max"></span>
+                </div>
+                <div class="terminal-title">bash - satria@portfolio:~</div>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-loader">
+                    <span id="typed-text"></span><span class="cursor"></span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <header>
         <h1>SATRIA</h1>
@@ -277,80 +212,189 @@
             <a href="#skills">Keahlian</a>
             <a href="#projects">Karya</a>
             <a href="#contact">Kontak</a>
+            
+            <button id="theme-btn" class="theme-btn" aria-label="Toggle Theme">
+                <svg id="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <svg id="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
         </nav>
     </header>
 
     <div class="container">
-        <section id="hero" class="hero">
+        <section id="hero" class="hero reveal">
             <div class="hero-text">
                 <h2>Satria Nanda Tama</h2>
                 <h3>Developer & Culture Enthusiast</h3>
                 <p>Siswa XI RPL 1 di SMKN 1 Bondowoso yang merakit kode dengan ketelitian layaknya tambalan kustom pada jaket denim saya. Berkomitmen menciptakan solusi perangkat lunak yang fungsional, efisien, dan berkarakter.</p>
                 <a href="#projects" class="btn-cta">Project saya</a>
             </div>
-            
             <div class="hero-image-container">
                 <img src="me.png" alt="Foto Satria Nanda Tama" class="profile-img">
             </div>
         </section>
 
-        <section id="about" class="section">
+        <section id="about" class="section reveal">
             <h3>Tentang Saya</h3>
-            <p>Berbasis di Bondowoso, Jawa Timur. Saat ini saya sedang mendalami ilmu Rekayasa Perangkat Lunak. Saya percaya bahwa <i>coding</i> bukan cuma soal ngetik syntax, tapi juga soal memecahkan masalah dengan logika dan kreativitas. Saat sedang tidak berada di depan layar, Anda mungkin menemukan saya di bengkel vespa atau lagi touring menjelajah tempat baru.</p>
-        </section>
-
-        <section id="skills" class="section">
-            <h3>Tech Stack</h3>
-            <div class="skills-grid">
-                <span class="skill-tag">HTML5 & CSS3</span>
-                <span class="skill-tag">PHP</span>
-                <span class="skill-tag">Laravel</span>
-                <span class="skill-tag">Python</span>
-                <span class="skill-tag">Dart & Flutter</span>
-                <span class="skill-tag">Git/GitHub</span>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Berbasis di Bondowoso, Jawa Timur. Saat ini saya sedang mendalami ilmu Rekayasa Perangkat Lunak. Saya percaya bahwa <i>coding</i> bukan cuma soal ngetik syntax, tapi juga soal memecahkan masalah dengan logika dan kreativitas.</p>
+                    <p>Membangun sesuatu dari nol adalah <i>passion</i> saya. Tidak hanya di barisan kode, tapi juga di garasi. Saya mendedikasikan waktu luang saya untuk merestorasi Vespa klasik, mengubah tumpukan rangka menjadi mesin yang hidup kembali.</p>
+                </div>
+                <div class="about-image-container reveal reveal-delay-1">
+                    <img src="2.jpeg" alt="Vespa Custom Satria" class="about-img">
+                </div>
             </div>
         </section>
 
-        <section id="projects" class="section">
+        <section id="skills" class="section reveal">
+            <h3>Tech Stack</h3>
+            <div class="skills-grid">
+                <span class="skill-tag reveal reveal-delay-1">HTML5 & CSS3</span>
+                <span class="skill-tag reveal reveal-delay-2">PHP</span>
+                <span class="skill-tag reveal reveal-delay-3">Laravel</span>
+                <span class="skill-tag reveal reveal-delay-1">Python</span>
+                <span class="skill-tag reveal reveal-delay-2">Dart & Flutter</span>
+                <span class="skill-tag reveal reveal-delay-3">Git/GitHub</span>
+            </div>
+        </section>
+
+        <section id="projects" class="section reveal">
             <h3>Showcase Karya</h3>
-            
             <div class="projects-container">
-                <a href="https://github.com/satria-mahatir/project-wali" target="_blank" class="project-card">
+                <a href="https://github.com/satria-mahatir/project-wali" target="_blank" class="project-card reveal reveal-delay-1">
                     <h4>Web E-Commerce</h4>
-                    <p>Sistem backend dengan Laravel. guru wali, dengan menguji sistem crud dengan adanya admin yang bisa mengatur data di dalam nya</p>
+                    <p>Sistem backend dengan Laravel. Guru wali, dengan menguji sistem CRUD dengan adanya admin yang bisa mengatur data di dalamnya.</p>
                     <span class="github-link-text">Lihat Source Code →</span>
                 </a>
-
-                <a href="https://github.com/satria-mahatir/islamic-pro-app" target="_blank" class="project-card">
+                <a href="https://github.com/satria-mahatir/islamic-pro-app" target="_blank" class="project-card reveal reveal-delay-2">
                     <h4>Task Manager App</h4>
                     <p>Aplikasi mobile berbasis Flutter. UI yang clean 2026.</p>
                     <span class="github-link-text">Lihat Source Code →</span>
                 </a>
             </div>
-
-            <div class="github-center">
+            <div class="github-center reveal">
                 <a href="https://github.com/satria-mahatir" target="_blank" class="btn-github">
-                    <img src="github.webp" alt="GitHub Logo" width="24" style="filter: invert(1);">
+                    <img src="github.webp" alt="GitHub Logo" class="github-icon">
                     Eksplorasi Repositori GitHub Saya
                 </a>
             </div>
         </section>
 
-        <section id="contact" class="section">
+        <section id="contact" class="section reveal">
             <h3>Mari Terhubung</h3>
             <p>Terbuka untuk diskusi proyek, kolaborasi, atau sekadar obrolan seputar teknologi dan kustomisasi otomotif.</p>
             <div class="contact-info">
                 <p>📍 Bondowoso, Jawa Timur</p>
                 <p>✉️ <a href="mailto:satrianandatama@gmail.com">satrianandatama@gmail.com</a></p>
-
-                <p>📱 WhatsApp: <a href="https://wa.me/6283139831133" target="_blank" style="color: #00ffcc; text-decoration: none; font-weight: bold;">Kirim Pesan</a></p>
+                <p>📱 WhatsApp: <a href="https://wa.me/6283139831133" target="_blank">Kirim Pesan</a></p>
             </div>
         </section>
     </div>
 
-    <footer>
+    <footer class="reveal">
         &copy; 2026 Satria Nanda Tama.
     </footer>
 
+    <script>
+        /* =========================================
+           1. LOGIC PRELOADER
+           ========================================= */
+        const preloader = document.getElementById('preloader');
+        const typedText = document.getElementById('typed-text');
+        
+        const hasVisited = sessionStorage.getItem('visited_portfolio');
+        let greetingMsg = !hasVisited ? "access granted. WELCOME, BROK." : "access granted. WELCOME BACK, BROK.";
+        if (!hasVisited) sessionStorage.setItem('visited_portfolio', 'true');
+
+        const lines = [ "satria@server:~$ boot sequence initiated...", `satria@server:~$ ${greetingMsg}` ];
+        let lineIndex = 0, charIndex = 0;
+        
+        function typeWriter() {
+            if (lineIndex < lines.length) {
+                if (charIndex < lines[lineIndex].length) {
+                    typedText.innerHTML += lines[lineIndex].charAt(charIndex);
+                    charIndex++; setTimeout(typeWriter, 15);
+                } else {
+                    typedText.innerHTML += "<br>"; 
+                    lineIndex++; charIndex = 0; setTimeout(typeWriter, 150);
+                }
+            } else {
+                setTimeout(() => {
+                    preloader.style.opacity = '0'; preloader.style.visibility = 'hidden';
+                    setTimeout(() => { preloader.remove(); }, 400);
+                }, 300);
+            }
+        }
+        window.addEventListener('load', () => { setTimeout(typeWriter, 200); });
+
+        /* =========================================
+           2. LOGIC DARK/LIGHT MODE
+           ========================================= */
+        const themeBtn = document.getElementById('theme-btn');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        
+        function updateIcon(isLight) {
+            if (isLight) { sunIcon.style.display = 'block'; moonIcon.style.display = 'none'; } 
+            else { sunIcon.style.display = 'none'; moonIcon.style.display = 'block'; }
+        }
+
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'light-mode') {
+            document.body.classList.add('light-mode'); updateIcon(true);
+        }
+
+        themeBtn.addEventListener('click', (e) => {
+            const isLight = document.body.classList.contains('light-mode');
+            const toggleTheme = () => {
+                if (isLight) {
+                    document.body.classList.remove('light-mode'); localStorage.setItem('theme', 'dark-mode'); updateIcon(false);
+                } else {
+                    document.body.classList.add('light-mode'); localStorage.setItem('theme', 'light-mode'); updateIcon(true);
+                }
+            };
+
+            if (!document.startViewTransition) { toggleTheme(); return; }
+
+            const rect = themeBtn.getBoundingClientRect();
+            const x = rect.left + rect.width / 2; const y = rect.top + rect.height / 2;
+            const transition = document.startViewTransition(toggleTheme);
+
+            transition.ready.then(() => {
+                const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+                document.documentElement.animate(
+                    { clipPath: [ `circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)` ] },
+                    { duration: 600, easing: 'ease-in-out', pseudoElement: '::view-transition-new(root)' }
+                );
+            });
+        });
+
+        /* =========================================
+           3. LOGIC SCROLL REVEAL (EFEK NGAMBANG)
+           ========================================= */
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) { return; } 
+                else { entry.target.classList.add('active'); observer.unobserve(entry.target); }
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => { revealOnScroll.observe(el); });
+    </script>
 </body>
 </html>
