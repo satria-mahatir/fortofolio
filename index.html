@@ -19,6 +19,7 @@
             --github-btn-bg: transparent;
             --github-btn-text: #ffffff;
             --img-shadow: rgba(0, 0, 0, 0.8);
+            
             --glow-1: rgba(0, 255, 204, 0.12); 
             --glow-2: rgba(0, 92, 230, 0.15);  
         }
@@ -36,6 +37,7 @@
             --github-btn-bg: #f4f5f7;
             --github-btn-text: #121212;
             --img-shadow: rgba(0, 0, 0, 0.15);
+            
             --glow-1: rgba(0, 92, 230, 0.15); 
             --glow-2: rgba(0, 255, 204, 0.15); 
         }
@@ -125,11 +127,11 @@
             max-width: 350px;
             border-radius: 12px;
             box-shadow: 0 15px 30px var(--img-shadow);
-            transform: rotate(3deg); /* Dibikin miring dikit biar artsy */
+            transform: rotate(3deg); 
             transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
         .about-img:hover {
-            transform: rotate(0deg) scale(1.05); /* Lurus dan nge-zoom halus kalau disorot */
+            transform: rotate(0deg) scale(1.05); 
             box-shadow: 0 20px 40px var(--img-shadow);
         }
 
@@ -167,10 +169,12 @@
         body.light-mode .github-icon { filter: invert(0); }
         body.light-mode .btn-github:hover .github-icon { filter: invert(1); }
 
-        /* Contact */
+        /* Contact & Perbaikan Teks Menceng */
         .contact-info { text-align: center; font-size: 1.2em; line-height: 2; }
         .contact-info p { transition: color 0.4s; color: var(--text-muted); }
         .contact-info a { color: var(--accent); text-decoration: none; font-weight: bold; transition: color 0.4s; }
+        
+        #contact p { text-align: center; margin-left: auto; margin-right: auto; max-width: 800px; }
 
         footer { text-align: center; padding: 30px; font-size: 0.9em; color: var(--text-muted); background-color: transparent; border-top: 1px solid var(--border-color); transition: color 0.4s, border-color 0.4s; }
 
@@ -253,7 +257,7 @@
                     <p>Membangun sesuatu dari nol adalah <i>passion</i> saya. Tidak hanya di barisan kode, tapi juga di garasi. Saya mendedikasikan waktu luang saya untuk merestorasi Vespa klasik, mengubah tumpukan rangka menjadi mesin yang hidup kembali.</p>
                 </div>
                 <div class="about-image-container reveal reveal-delay-1">
-                    <img src="2.jpeg" alt="Vespa Custom Satria" class="about-img">
+                    <img src="WhatsApp Image 2026-04-18 at 13.12.45 (1).jpeg" alt="Vespa Custom Satria" class="about-img">
                 </div>
             </div>
         </section>
