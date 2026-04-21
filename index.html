@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portofolio | Satria Nanda Tama</title>
+    
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
+
     <style>
-        /* --- CSS VARIABLES (Sistem Tema) --- */
+        /* --- CSS VARIABLES --- */
         :root {
             --bg-main: #0a0a0a; 
             --bg-header: rgba(10, 10, 10, 0.7); 
@@ -45,7 +47,7 @@
             --glow-2: rgba(0, 255, 204, 0.15); 
         }
 
-        /* --- CUSTOM SCROLLBAR & KURSOR MAGNETIK --- */
+        /* --- SCROLLBAR & CURSOR --- */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-main); }
         ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; border: 2px solid var(--bg-main); }
@@ -64,14 +66,13 @@
         .cursor-hover-effect { width: 60px; height: 60px; background-color: rgba(0, 255, 204, 0.1); border-color: transparent; }
         .cursor-dot-hover { transform: translate(-50%, -50%) scale(0.5); }
 
-        /* --- SCROLL PROGRESS BAR --- */
+        /* --- UI COMPONENTS --- */
         #scroll-progress {
             position: fixed; top: 0; left: 0; width: 0%; height: 3px; 
             background: var(--accent); z-index: 999999; 
             box-shadow: 0 0 10px var(--accent); transition: width 0.1s ease-out;
         }
 
-        /* --- BACKGROUND ANIMASI AMBIENT & MOUSE GLOW --- */
         .ambient-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow: hidden; z-index: -2; pointer-events: none; }
         .blob { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.8; animation: floatBlob infinite alternate ease-in-out; transition: background 0.8s ease; }
         .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--glow-1); animation-duration: 12s; }
@@ -81,7 +82,7 @@
         .mouse-glow { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1; background: radial-gradient(circle 600px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 255, 204, 0.06), transparent 80%); opacity: 0; transition: opacity 0.5s ease; }
         body:not(.light-mode):hover .mouse-glow { opacity: 1; }
 
-        /* --- PRELOADER JENDELA TERMINAL --- */
+        /* --- PRELOADER --- */
         #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 999998; display: flex; justify-content: center; align-items: center; transition: opacity 0.4s ease, visibility 0.4s ease; font-family: 'Courier New', Courier, monospace; }
         .terminal-window { width: 90%; max-width: 550px; background-color: #0d0d0d; border-radius: 8px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); border: 1px solid #333; overflow: hidden; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         @keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -95,19 +96,17 @@
         .cursor { display: inline-block; width: 8px; height: 1.1em; background-color: #00ffcc; animation: blink 0.8s step-end infinite; vertical-align: bottom; margin-left: 4px; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* --- CSS BASE --- */
+        /* --- BASE STYLES --- */
         * { box-sizing: border-box; } 
         html { scroll-behavior: smooth; scroll-padding-top: 80px; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; transition: background-color 0.4s ease, color 0.4s ease; }
 
-        /* --- ANIMASI SCROLL REVEAL --- */
         .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .reveal-delay-1 { transition-delay: 0.1s; }
         .reveal-delay-2 { transition-delay: 0.2s; }
         .reveal-delay-3 { transition-delay: 0.3s; }
 
-        /* Navigasi */
         header { background-color: var(--bg-header); padding: 15px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; justify-content: space-around; align-items: center; transition: background-color 0.4s ease, border-color 0.4s ease; }
         header h1 { margin: 0; color: var(--accent); font-size: 1.8em; letter-spacing: 1px; transition: color 0.4s; }
         nav { display: flex; align-items: center; gap: 15px; }
@@ -123,18 +122,22 @@
 
         .container { max-width: 1000px; margin: auto; padding: 20px; position: relative; z-index: 2; }
 
-        /* Hero */
+        /* --- HERO SECTION --- */
         .hero { display: flex; align-items: center; justify-content: space-between; gap: 40px; padding: 100px 20px; border-bottom: 1px solid var(--border-color); transition: border-color 0.4s ease; }
         .hero-text { flex: 1; text-align: left; }
         
         .hero-text h2 { 
             font-size: 3.5em; margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 2px; line-height: 1.1;
             background: linear-gradient(90deg, var(--text-main), var(--accent), var(--text-main));
-            background-size: 200% auto; color: transparent; -webkit-background-clip: text; animation: shimmer 5s linear infinite;
+            background-size: 200% auto; color: transparent; 
+            -webkit-background-clip: text; 
+            background-clip: text; /* FIX KUNING VS CODE */
+            animation: shimmer 5s linear infinite;
         }
         @keyframes shimmer { to { background-position: 200% center; } }
 
-        .typewriter-container { font-size: 1.5em; color: var(--accent); margin: 0 0 20px 0; font-weight: normal; min-height: 1.5em; display: flex; align-items: center; }
+        /* ANTI CLS TYPEWRITER */
+        .typewriter-container { font-size: 1.5em; color: var(--accent); margin: 0 0 20px 0; font-weight: normal; height: 1.5em; min-height: 1.5em; display: flex; align-items: center; overflow: hidden; }
         .cursor-hero { display: inline-block; width: 3px; height: 1.2em; background-color: var(--accent); margin-left: 5px; animation: blinkHero 0.8s step-end infinite; }
         @keyframes blinkHero { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
@@ -146,10 +149,11 @@
         .hero-image-container { flex: 1; display: flex; justify-content: center; perspective: 1000px; }
         .profile-img { width: 100%; max-width: 400px; height: auto; border-radius: 12px; filter: drop-shadow(0 15px 25px var(--img-shadow)); }
 
-        /* --- ABOUT SECTION --- */
+        /* --- CONTENT SECTIONS --- */
         .section { padding: 80px 20px; border-bottom: 1px solid var(--border-color); transition: border-color 0.4s ease; }
         
-        .scramble-text { color: var(--accent); font-size: 2em; margin-bottom: 40px; text-align: center; text-transform: uppercase; letter-spacing: 2px; transition: color 0.4s; font-family: 'Courier New', Courier, monospace; font-weight: bold; }
+        /* ANTI CLS SCRAMBLE */
+        .scramble-text { color: var(--accent); font-size: 2em; margin-bottom: 40px; text-align: center; text-transform: uppercase; letter-spacing: 2px; transition: color 0.4s; font-family: 'Courier New', Courier, monospace; font-weight: bold; min-height: 1.2em; display: block; }
         
         .about-content { display: flex; align-items: center; gap: 40px; }
         .about-text { flex: 1; }
@@ -158,13 +162,12 @@
         .about-image-container { flex: 1; display: flex; justify-content: center; position: relative; perspective: 1000px; }
         .tilt-element { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; position: relative; }
         
-        /* EFEK PANTULAN KACA (GLARE) */
         .glare { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), transparent 60%); transform: translate(-50%, -50%); pointer-events: none; opacity: 0; transition: opacity 0.3s; z-index: 10; mix-blend-mode: overlay; border-radius: inherit; }
         .tilt-element:hover .glare { opacity: 1; }
 
         .about-img { width: 100%; max-width: 350px; border-radius: 12px; box-shadow: 0 15px 30px var(--img-shadow); transform: rotate(3deg); }
 
-        /* --- SKILLS SECTION --- */
+        /* --- SKILLS BENTO --- */
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 25px; justify-items: center; }
         .skill-card { background-color: var(--bg-card); padding: 25px 15px; border-radius: 16px; border: 1px solid var(--card-border); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 150px; text-align: center; transition: transform 0.4s, border-color 0.4s, box-shadow 0.4s; }
         .skill-card:hover { border-color: var(--accent); background-color: var(--bg-main); box-shadow: 0 15px 30px rgba(0, 255, 204, 0.15); }
@@ -176,16 +179,19 @@
         @keyframes floatIcon { 0%, 100% { transform: translateY(0) translateZ(30px); } 50% { transform: translateY(-8px) translateZ(30px); } }
         body:not(.light-mode) .icon-github { filter: invert(1) drop-shadow(0 5px 10px rgba(255,255,255,0.2)); }
 
-        /* --- PROJECTS SECTION --- */
+        /* --- PROJECTS --- */
         .projects-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; align-items: stretch; perspective: 1000px; }
         .project-card { background-color: var(--bg-card); border-radius: 12px; border: 1px solid var(--card-border); text-decoration: none; color: var(--text-main); display: flex; overflow: hidden; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transform-style: preserve-3d; transition: border-color 0.4s, box-shadow 0.4s, background-color 0.4s; }
         .project-card:hover { border-color: var(--accent); background-color: var(--bg-main); box-shadow: 0 20px 40px var(--img-shadow); }
+        
         .project-card.web-layout { flex-direction: column; }
         .project-card.web-layout .project-img-wrapper { width: 100%; height: 240px; border-bottom: 1px solid var(--card-border); }
         .project-card.web-layout .project-info { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; transform: translateZ(30px); }
+
         .project-card.mobile-layout { flex-direction: row; }
         .project-card.mobile-layout .project-img-wrapper { width: 45%; border-right: 1px solid var(--card-border); }
         .project-card.mobile-layout .project-info { width: 55%; padding: 25px; display: flex; flex-direction: column; justify-content: center; transform: translateZ(30px); }
+
         .project-img-wrapper { position: relative; overflow: hidden; }
         .project-img { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 0.5s ease; }
         .project-card:hover .project-img { transform: scale(1.08); }
@@ -203,7 +209,7 @@
         body.light-mode .github-icon { filter: invert(0); }
         body.light-mode .btn-github:hover .github-icon { filter: invert(1); }
 
-        /* Contact */
+        /* --- CONTACT --- */
         .contact-info { text-align: center; font-size: 1.2em; line-height: 2; }
         .contact-info p { transition: color 0.4s; color: var(--text-muted); }
         .contact-info a { color: var(--accent); text-decoration: none; font-weight: bold; transition: color 0.4s; }
@@ -379,7 +385,7 @@
                     </div>
                     <div class="project-info">
                         <h4>Web E-Commerce</h4>
-                        <p>Sistem backend dengan Laravel. Guru wali, dengan menguji sistem CRUD dengan adanya admin yang bisa mengatur data di dalamnya.Admin, Guru dan Murid yang memiliki Dashboard tersendiri</p>
+                        <p>Sistem backend dengan Laravel. Guru wali, dengan menguji sistem CRUD dengan adanya admin yang bisa mengatur data di dalamnya.</p>
                         <span class="github-link-text">Lihat Source Code →</span>
                     </div>
                 </a>
@@ -423,10 +429,11 @@
 
     <script>
         /* =========================================
-           1. LOGIC HACKER SCRAMBLE TEXT (RUMUS UTAMA)
+           1. LOGIC HACKER SCRAMBLE TEXT
            ========================================= */
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+<>{}[]";
         function scrambleText(element) {
+            if (!element) return;
             let iteration = 0;
             const originalText = element.dataset.value;
             clearInterval(element.interval);
@@ -434,7 +441,6 @@
             element.interval = setInterval(() => {
                 element.innerText = originalText.split("").map((letter, index) => {
                     if(index < iteration) { return originalText[index]; }
-                    // Tambahan biar spasi tetep jadi spasi (nggak ikut ngeglitch)
                     if(originalText[index] === " ") { return " "; }
                     return letters[Math.floor(Math.random() * letters.length)];
                 }).join("");
@@ -445,7 +451,7 @@
         }
 
         /* =========================================
-           2. LOGIC PRELOADER & SCRAMBLE NAMA AWAL
+           2. LOGIC PRELOADER
            ========================================= */
         const preloader = document.getElementById('preloader');
         const typedText = document.getElementById('typed-text');
@@ -470,7 +476,6 @@
                     preloader.style.opacity = '0'; preloader.style.visibility = 'hidden';
                     setTimeout(() => { 
                         preloader.remove(); 
-                        // EFEK SCRAMBLE NAMA JALAN PAS TERMINAL NGILANG!
                         const heroName = document.getElementById('hero-name');
                         if(heroName) scrambleText(heroName);
                     }, 400);
@@ -519,22 +524,24 @@
         
         window.addEventListener('mousemove', (e) => {
             const posX = e.clientX; const posY = e.clientY;
-            cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
-            cursorOutline.style.left = `${posX}px`; cursorOutline.style.top = `${posY}px`;
+            if(cursorDot) { cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`; }
+            if(cursorOutline) { cursorOutline.style.left = `${posX}px`; cursorOutline.style.top = `${posY}px`; }
             
             const mouseGlow = document.getElementById('mouse-glow');
-            mouseGlow.style.setProperty('--mouse-x', `${posX}px`);
-            mouseGlow.style.setProperty('--mouse-y', `${posY}px`);
+            if(mouseGlow) {
+                mouseGlow.style.setProperty('--mouse-x', `${posX}px`);
+                mouseGlow.style.setProperty('--mouse-y', `${posY}px`);
+            }
         });
 
         document.querySelectorAll('a, button, .skill-card, .project-card, .tilt-element').forEach(el => {
             el.addEventListener('mouseenter', () => {
-                cursorDot.classList.add('cursor-dot-hover');
-                cursorOutline.classList.add('cursor-hover-effect');
+                cursorDot?.classList.add('cursor-dot-hover');
+                cursorOutline?.classList.add('cursor-hover-effect');
             });
             el.addEventListener('mouseleave', () => {
-                cursorDot.classList.remove('cursor-dot-hover');
-                cursorOutline.classList.remove('cursor-hover-effect');
+                cursorDot?.classList.remove('cursor-dot-hover');
+                cursorOutline?.classList.remove('cursor-hover-effect');
             });
         });
 
@@ -579,7 +586,7 @@
         });
 
         /* =========================================
-           6. SCROLL REVEAL UNTUK SECTION LAIN
+           6. SCROLL REVEAL & INTERSECTION OBSERVER
            ========================================= */
         const revealElements = document.querySelectorAll('.reveal');
         const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
@@ -596,7 +603,6 @@
         }, revealOptions);
 
         revealElements.forEach(el => { revealOnScroll.observe(el); });
-        document.querySelectorAll('.scramble-text').forEach(el => { revealOnScroll.observe(el); });
 
         /* =========================================
            7. LOGIC TYPEWRITER HERO SECTION
@@ -622,7 +628,6 @@
                 isDeleting = false; textIndex = (textIndex + 1) % textArray.length; setTimeout(typeHero, 500);
             }
         }
-        
         setTimeout(typeHero, 3000);
 
     </script>
